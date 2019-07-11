@@ -3,10 +3,13 @@ import { Form, Input, Button, Alert } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 
 import GetText from '../GetText';
+import { Quote, example as exampleQuote } from '../Quote/types';
 
 import { formItemLayout, tailFormItemLayout } from './styles';
 
-interface IProps {}
+interface IProps {
+  setQuote: (quote: Quote) => void;
+}
 
 interface IState {
   error: Error | null;
@@ -52,6 +55,12 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
         return;
       }
       console.info('formValues', values);
+      // @ts-ignore
+      window.fields = values;
+
+      // TODO: disable form
+      // TODO: call quote api
+      this.props.setQuote(exampleQuote);
     });
   };
 
@@ -264,6 +273,6 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
   }
 }
 
-const WrappedMainForm = Form.create<FormComponentProps>({ name: 'main' })(MainForm);
+const WrappedMainForm = Form.create<IProps & FormComponentProps>({ name: 'main' })(MainForm);
 
 export default WrappedMainForm;
