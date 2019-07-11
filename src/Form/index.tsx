@@ -3,7 +3,8 @@ import { Form, Input, Button, Alert } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 
 import GetText from '../GetText';
-import { Quote, example as exampleQuote } from '../Quote/types';
+import { getQuote } from '../Quote/api';
+import { Quote } from '../Quote/types';
 
 import { formItemLayout, tailFormItemLayout } from './styles';
 
@@ -58,9 +59,14 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
       // @ts-ignore
       window.fields = values;
 
-      // TODO: disable form
-      // TODO: call quote api
-      this.props.setQuote(exampleQuote);
+      this.setState({
+        isSubmitting: true,
+      });
+
+      getQuote(values).then(quote => {
+        this.props.setQuote(quote);
+        // no need to clear submitting, parent will demount
+      });
     });
   };
 

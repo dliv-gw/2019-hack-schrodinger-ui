@@ -13,3 +13,5 @@ export const example: Quote = {
   total: 1698,
   taxes: 115,
 };
+
+export interface IQuoteRequest {}
