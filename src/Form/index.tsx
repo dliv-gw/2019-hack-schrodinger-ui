@@ -63,10 +63,17 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
         isSubmitting: true,
       });
 
-      getQuote(values).then(quote => {
-        this.props.setQuote(quote);
-        // no need to clear submitting, parent will demount
-      });
+      getQuote(values)
+        .then(quote => {
+          this.props.setQuote(quote);
+          // no need to clear submitting, parent will demount
+        })
+        .catch(error => {
+          this.setState({
+            error,
+            isSubmitting: false,
+          });
+        });
     });
   };
 
