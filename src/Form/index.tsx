@@ -152,6 +152,56 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
             </Button>
           )}
         </Form.Item>
+        <Form.Item label="State">
+          {getFieldDecorator('state', {
+            rules: [
+              {
+                required: true,
+                message: `Please provider your state`,
+              },
+            ],
+          })(<Input placeholder="State" allowClear={true} autoComplete="state" />)}
+        </Form.Item>
+        <Form.Item label="First Name">
+          {getFieldDecorator('fname', {
+            rules: [
+              {
+                required: true,
+                message: `Please provider your First Name`,
+              },
+            ],
+          })(<Input placeholder="First Name" allowClear={true} autoComplete="surname" />)}
+        </Form.Item>
+        <Form.Item label="Last Name">
+          {getFieldDecorator('lname', {
+            rules: [
+              {
+                required: true,
+                message: `Please provider your Last Name`,
+              },
+            ],
+          })(<Input placeholder="Last Name" allowClear={true} autoComplete="family-name" />)}
+        </Form.Item>
+        <Form.Item label="Address 1">
+          {getFieldDecorator('address1', {
+            rules: [
+              {
+                required: true,
+                message: `Please provider your address`,
+              },
+            ],
+          })(<Input placeholder="Address" allowClear={true} autoComplete="address" />)}
+        </Form.Item>
+        <Form.Item label="Address 2">
+          {getFieldDecorator('address2', {
+            rules: [],
+          })(<Input placeholder="Address Line 2" allowClear={true} autoComplete="address2" />)}
+        </Form.Item>
+        <Form.Item label="Date of Birth">
+          {getFieldDecorator('dob', {
+            rules: [],
+          })(<Input placeholder="MM-DD-YYYY" allowClear={true} autoComplete="dob" />)}
+        </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit" disabled={isSubmitting}>
             Get Quote
