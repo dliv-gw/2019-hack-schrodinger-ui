@@ -1,5 +1,33 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Configuring
+
+* Edit [src/config.js](./src/config.js).
+
+## Developing
+
+* Ensure you have Node and NPM installed and on your path. See: https://nodejs.org/en/
+* Install deps with `npm i`
+* Run with `npm start`
+* Browser *should* automatically open to http://localhost:3000/ and display app
+
+Hint: code reload is finicky. You may need to Ctrl+C the dev server and restart again with `npm start` 
+after changes.
+
+## Manual Deploy
+
+* Install deps `npm i`
+* Build `npm run build`
+* Upload files in directory `build` to S3 (grant public read access)
+* Enable static hosting on S3 bucket (default page should be "index.html")
+
+This app has no CI/CD. It is hosted in my personal bucket. If you want to make changes you will 
+need to deploy to a new bucket.
+
+-------------------------------------------------------------------------------------------
+Standard CRA boilerplate info below.
+-------------------------------------------------------------------------------------------
+
 ## Available Scripts
 
 In the project directory, you can run:
