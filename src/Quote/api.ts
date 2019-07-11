@@ -27,7 +27,7 @@ export const getQuote = async (quote: IQuoteRequest): Promise<Quote> => {
     return apiQuote;
   } catch (e) {
     console.error(e);
-    console.warn('there was quoting error, returning an example quote');
+    console.warn('there was a quoting error, returning an example quote');
     await delay(3);
     return example;
   }

@@ -40,7 +40,7 @@ export const mapApiLicenseToQuoteFields = (api: ApiLicense): QuoteFieldsFromLice
     addressLine1: api.address1,
     city,
     country: 'US',
-    dob: api.dob,
+    dob: (api.dob || '').replace(/\//g, '-'),
     fname: api.fname,
     licenseNumber: api.licenseNumber,
     lname: api.lname,

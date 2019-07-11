@@ -14,7 +14,7 @@ const expectedQuote: QuoteFieldsFromLicense = {
   addressLine1: '918 N ROXBURY',
   city: 'BEVERLY',
   country: 'US',
-  dob: '08/06/1911',
+  dob: '08-06-1911',
   fname: 'LUCILLE',
   licenseNumber: 'B2201793',
   lname: 'BALL',
