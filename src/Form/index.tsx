@@ -16,7 +16,13 @@ interface IState {
 }
 
 interface IFormValues {
-  number: string;
+  state: string;
+  fname: string;
+  lname: string;
+  address1: string;
+  address2: string;
+  dob: string;
+  licenseNumber: string;
   vin: string;
 }
 
@@ -52,56 +58,6 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="License Number">
-          {getFieldDecorator('number', {
-            rules: [
-              {
-                required: true,
-                message: `Please provider your driver's license number`,
-              },
-            ],
-          })(
-            <Input
-              placeholder="Driver's License Number"
-              allowClear={true}
-              autoComplete="license-number"
-            />,
-          )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          {isUploadingLicense ? (
-            <GetText
-              docType="license"
-              onSubmit={number => {
-                this.setState(
-                  {
-                    isUploadingLicense: false,
-                  },
-                  () => {
-                    if (number) {
-                      setFieldsValue({
-                        number,
-                      });
-                    }
-                  },
-                );
-              }}
-            />
-          ) : (
-            <Button
-              type="link"
-              htmlType="button"
-              disabled={isSubmitting}
-              onClick={() => {
-                this.setState({
-                  isUploadingLicense: true,
-                });
-              }}
-            >
-              Upload License
-            </Button>
-          )}
-        </Form.Item>
         <Form.Item label="VIN">
           {getFieldDecorator('vin', {
             rules: [
@@ -116,7 +72,7 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
           {isUploadingVin ? (
             <GetText
               docType="vin"
-              onSubmit={vin => {
+              onVinSubmit={vin => {
                 this.setState(
                   {
                     isUploadingVin: false,
@@ -143,6 +99,56 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
               }}
             >
               Upload Vehicle Vin
+            </Button>
+          )}
+        </Form.Item>
+        <Form.Item label="License Number">
+          {getFieldDecorator('licenseNumber', {
+            rules: [
+              {
+                required: true,
+                message: `Please provider your driver's license number`,
+              },
+            ],
+          })(
+            <Input
+              placeholder="Driver's License Number"
+              allowClear={true}
+              autoComplete="license-number"
+            />,
+          )}
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          {isUploadingLicense ? (
+            <GetText
+              docType="license"
+              onLicenseSubmit={license => {
+                this.setState(
+                  {
+                    isUploadingLicense: false,
+                  },
+                  () => {
+                    if (license) {
+                      setFieldsValue({
+                        ...license,
+                      });
+                    }
+                  },
+                );
+              }}
+            />
+          ) : (
+            <Button
+              type="link"
+              htmlType="button"
+              disabled={isSubmitting}
+              onClick={() => {
+                this.setState({
+                  isUploadingLicense: true,
+                });
+              }}
+            >
+              Upload License
             </Button>
           )}
         </Form.Item>

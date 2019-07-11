@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'antd';
 
-import { getLicenseData, getVinData } from './api';
+import { getLicenseData, getVinData, License } from './api';
 import { getData } from './data-uri-utils';
 import { Wrapper } from './styles';
 
@@ -9,12 +9,13 @@ type DocType = 'license' | 'vin';
 
 interface IProps {
   docType: DocType;
-  onSubmit: (text: string | null) => void;
+  // ugly, would be better to make this component generic on <License|Vin>
+  onLicenseSubmit?: (license: License) => void;
+  onVinSubmit?: (text: string) => void;
 }
 
-const GetText: React.SFC<IProps> = ({ docType, onSubmit }) => {
+const GetText: React.SFC<IProps> = ({ docType, onLicenseSubmit, onVinSubmit }) => {
   const [dataUri, setDataUri] = React.useState<string | null>(null);
-  const [word, setWord] = React.useState<string | null>(null);
   const [error, setError] = React.useState<Error | null>(null);
   const [isFetching, setIsFetching] = React.useState(false);
 
@@ -27,7 +28,6 @@ const GetText: React.SFC<IProps> = ({ docType, onSubmit }) => {
         accept=".jpg,.jpeg,.png"
         onChange={function({ target: { files } }) {
           setDataUri(null);
-          setWord(null);
           setError(null);
           setIsFetching(false);
 
@@ -45,23 +45,28 @@ const GetText: React.SFC<IProps> = ({ docType, onSubmit }) => {
               if (!data) {
                 throw new Error('no data in uri');
               }
-              let text = '';
               switch (docType) {
                 case 'license': {
                   const license = await getLicenseData(data);
-                  text = license.licenseNumber;
+                  if (onLicenseSubmit) {
+                    onLicenseSubmit(license);
+                  } else {
+                    throw new Error('missing onLicenseSubmit');
+                  }
                   break;
                 }
                 case 'vin': {
                   const vin = await getVinData(data);
-                  text = vin.vin;
+                  if (onVinSubmit) {
+                    onVinSubmit(vin.vin);
+                  } else {
+                    throw new Error('missing onVinSubmit');
+                  }
                   break;
                 }
                 default:
-                  console.error(`unexpected-case-${docType}`);
+                  throw new Error(`unexpected-case-${docType}`);
               }
-              setWord(text);
-              onSubmit(text);
             } catch (e) {
               console.error(e);
               setError(e);
@@ -74,11 +79,6 @@ const GetText: React.SFC<IProps> = ({ docType, onSubmit }) => {
       {dataUri && (
         <div>
           <img src={dataUri} height={150} />
-          {word && (
-            <div>
-              <strong>{word}</strong>
-            </div>
-          )}
         </div>
       )}
     </Wrapper>
