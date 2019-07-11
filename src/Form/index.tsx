@@ -80,7 +80,7 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
         {isSubmitting && (
           <div
             style={{
-              position: 'absolute',
+              position: 'fixed',
               top: 0,
               left: 0,
               background: 'rgba(0, 0, 0, 0.2)',
@@ -88,7 +88,7 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
             }}
           >
             <Spin tip="Retrieving your quote">
-              <div style={{ width: '100vw', height: '100vh' }}> </div>
+              <div style={{ minWidth: '100vw', minHeight: '100vh' }}> </div>
             </Spin>
           </div>
         )}
