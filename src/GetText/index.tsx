@@ -19,22 +19,13 @@ const GetText: React.SFC<IProps> = ({ docType, onLicenseSubmit, onVinSubmit }) =
   const [error, setError] = React.useState<Error | null>(null);
   const [isFetching, setIsFetching] = React.useState(false);
 
-  const id = `picker-${docType}`;
-
-  React.useEffect(() => {
-    // @ts-ignore
-    document.getElementById(id).click();
-  }, [id]);
-
   return (
     <Wrapper>
       {error && <Alert type="error" message="Error" description={error.message} />}
       <input
-        id={id}
         type="file"
         disabled={isFetching}
         accept=".jpg,.jpeg,.png"
-        style={{ display: 'none' }}
         onChange={function({ target: { files } }) {
           setDataUri(null);
           setError(null);
