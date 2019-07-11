@@ -10,23 +10,52 @@ const request = (imgData: string): any => ({
   },
 });
 
-export type License = {
-  state: string;
-  fname: string;
-  lname: string;
+export type ApiLicense = {
   address1: string;
   address2: string;
   dob: string;
+  fname: string;
   licenseNumber: string;
+  lname: string;
+  state: string;
 };
 
-export const getLicenseData = async (imgData: string): Promise<License> => {
+export type QuoteFieldsFromLicense = {
+  addressLine1: string;
+  city: string;
+  country: 'US';
+  postalCode: string;
+  state: string;
+
+  // are these needed?
+  dob: string;
+  fname: string;
+  licenseNumber: string;
+  lname: string;
+};
+
+export const mapApiLicenseToQuoteFields = (api: ApiLicense): QuoteFieldsFromLicense => {
+  const [city, , postalCode] = (api.address2 || '').split(/\s+/);
+  return {
+    addressLine1: api.address1,
+    city,
+    country: 'US',
+    dob: api.dob,
+    fname: api.fname,
+    licenseNumber: api.licenseNumber,
+    lname: api.lname,
+    postalCode,
+    state: api.state,
+  };
+};
+
+export const getLicenseData = async (imgData: string): Promise<QuoteFieldsFromLicense> => {
   const resp = await fetch(endpointLicense, request(imgData));
   if (!resp.ok) {
     throw new Error(resp.status.toString());
   }
-  const license: License = await resp.json();
-  return license;
+  const license: ApiLicense = await resp.json();
+  return mapApiLicenseToQuoteFields(license);
 };
 
 export type Vin = {

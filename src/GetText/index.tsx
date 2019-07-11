@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'antd';
 
-import { getLicenseData, getVinData, License } from './api';
+import { getLicenseData, getVinData, QuoteFieldsFromLicense } from './api';
 import { getData } from './data-uri-utils';
 import { Wrapper } from './styles';
 
@@ -10,7 +10,7 @@ type DocType = 'license' | 'vin';
 interface IProps {
   docType: DocType;
   // ugly, would be better to make this component generic on <License|Vin>
-  onLicenseSubmit?: (license: License) => void;
+  onLicenseSubmit?: (license: QuoteFieldsFromLicense) => void;
   onVinSubmit?: (text: string) => void;
 }
 

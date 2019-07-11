@@ -16,14 +16,18 @@ interface IState {
 }
 
 interface IFormValues {
-  state: string;
+  // with OCR buttons
+  vin: string;
+  licenseNumber: string;
+
+  // also populated by DL OCR
+  addressLine1: string;
+  city: string;
+  dob: string;
   fname: string;
   lname: string;
-  address1: string;
-  address2: string;
-  dob: string;
-  licenseNumber: string;
-  vin: string;
+  postalCode: string;
+  state: string;
 }
 
 class MainForm extends React.Component<IProps & FormComponentProps, IState> {
@@ -63,7 +67,7 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
             rules: [
               {
                 required: true,
-                message: `Please provider your vehicle's vin number`,
+                message: `Please provide your vehicle's vin number`,
               },
             ],
           })(<Input placeholder="VIN" allowClear={true} autoComplete="vin" />)}
@@ -107,7 +111,7 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
             rules: [
               {
                 required: true,
-                message: `Please provider your driver's license number`,
+                message: `Please provide your driver's license number`,
               },
             ],
           })(
@@ -152,22 +156,12 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
             </Button>
           )}
         </Form.Item>
-        <Form.Item label="State">
-          {getFieldDecorator('state', {
-            rules: [
-              {
-                required: true,
-                message: `Please provider your state`,
-              },
-            ],
-          })(<Input placeholder="State" allowClear={true} autoComplete="state" />)}
-        </Form.Item>
         <Form.Item label="First Name">
           {getFieldDecorator('fname', {
             rules: [
               {
                 required: true,
-                message: `Please provider your First Name`,
+                message: `Please provide your First Name`,
               },
             ],
           })(<Input placeholder="First Name" allowClear={true} autoComplete="surname" />)}
@@ -177,30 +171,76 @@ class MainForm extends React.Component<IProps & FormComponentProps, IState> {
             rules: [
               {
                 required: true,
-                message: `Please provider your Last Name`,
+                message: `Please provide your Last Name`,
               },
             ],
           })(<Input placeholder="Last Name" allowClear={true} autoComplete="family-name" />)}
         </Form.Item>
-        <Form.Item label="Address 1">
-          {getFieldDecorator('address1', {
+        <Form.Item label="Date of Birth">
+          {getFieldDecorator('dob', {
             rules: [
               {
                 required: true,
-                message: `Please provider your address`,
+                message: `Please provide your Date of Birth`,
+              },
+            ],
+          })(
+            <Input
+              placeholder="Date of Birth as MM/DD/YYYY"
+              allowClear={true}
+              autoComplete="dob"
+            />,
+          )}
+        </Form.Item>
+        <Form.Item label="Address 1">
+          {getFieldDecorator('addressLine1', {
+            rules: [
+              {
+                required: true,
+                message: `Please provide your address`,
               },
             ],
           })(<Input placeholder="Address" allowClear={true} autoComplete="address" />)}
         </Form.Item>
-        <Form.Item label="Address 2">
-          {getFieldDecorator('address2', {
-            rules: [],
-          })(<Input placeholder="Address Line 2" allowClear={true} autoComplete="address2" />)}
+        <Form.Item label="City">
+          {getFieldDecorator('city', {
+            rules: [
+              {
+                required: true,
+                message: `Please provide your City`,
+              },
+            ],
+          })(<Input placeholder="City" allowClear={true} autoComplete="city" />)}
         </Form.Item>
-        <Form.Item label="Date of Birth">
-          {getFieldDecorator('dob', {
-            rules: [],
-          })(<Input placeholder="MM-DD-YYYY" allowClear={true} autoComplete="dob" />)}
+        <Form.Item label="State">
+          {getFieldDecorator('state', {
+            rules: [
+              {
+                required: true,
+                message: `Please provide your state`,
+              },
+            ],
+          })(<Input placeholder="State" allowClear={true} autoComplete="state" />)}
+        </Form.Item>
+        <Form.Item label="Zip">
+          {getFieldDecorator('postalCode', {
+            rules: [
+              {
+                required: true,
+                message: `Please provide your Zip Code`,
+              },
+            ],
+          })(<Input placeholder="5 digit Zip Code" allowClear={true} autoComplete="zip" />)}
+        </Form.Item>
+        <Form.Item label="Country">
+          {getFieldDecorator('country', {
+            rules: [
+              {
+                required: true,
+                message: `Please provide your 2 digit Country`,
+              },
+            ],
+          })(<Input placeholder="2 letter Country" allowClear={true} autoComplete="zip" />)}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit" disabled={isSubmitting}>
