@@ -7,5 +7,4 @@ export const endpointLicense =
 
 export const endpointVin = 'https://nwg45cfrc0.execute-api.us-east-1.amazonaws.com/v1/parsevin';
 
-export const endpointQuote =
-  'http://ec2-54-212-229-215.us-west-2.compute.amazonaws.com:8080//createQuote';
+export const endpointQuote = 'http://aharris-p500.guidewire.com:8080/createQuote';
